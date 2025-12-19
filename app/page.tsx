@@ -44,28 +44,28 @@ const InfoRow = memo(({ label, value, onCopy, isCopied, showBorder = true }: {
   isCopied: boolean;
   showBorder?: boolean;
 }) => (
-  <div className={`${showBorder ? 'border-b border-gray-200' : ''}`}>
+  <div className={`${showBorder ? 'border-b border-white/20' : ''}`}>
     <button
       onClick={onCopy}
-      className="w-full flex items-center justify-between py-3 px-4 hover:bg-gray-50 transition-colors duration-150 touch-manipulation"
+      className="w-full flex items-center justify-between py-3 px-4 hover:bg-white/40 transition-colors duration-150 touch-manipulation active:scale-[0.99]"
     >
-      <span className="text-sm font-semibold text-gray-500">{label}</span>
+      <span className="text-sm font-semibold text-gray-600">{label}</span>
       <div className="flex items-center gap-2 min-w-0 flex-1 justify-end overflow-hidden">
         <div className="relative w-full flex justify-end">
-          <span 
-            className={`text-sm font-medium text-gray-900 truncate transition-all duration-150 ${
+          <span
+            className={`text-sm font-semibold text-gray-900 truncate transition-all duration-150 ${
               isCopied ? 'opacity-0 scale-95' : 'opacity-100 scale-100'
             }`}
           >
             {value || '---'}
           </span>
-          <div 
+          <div
             className={`absolute right-0 flex items-center gap-1.5 transition-all duration-150 ${
               isCopied ? 'opacity-100 scale-100' : 'opacity-0 scale-95 pointer-events-none'
             }`}
           >
             <Icon name="check" className="w-4 h-4 text-green-600" />
-            <span className="text-sm font-medium text-green-600 whitespace-nowrap">已复制</span>
+            <span className="text-sm font-semibold text-green-600 whitespace-nowrap">已复制</span>
           </div>
         </div>
       </div>
@@ -93,18 +93,18 @@ const Modal = memo(({ isOpen, onClose, title, children }: {
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-      <div 
-        className="absolute inset-0 bg-black/20 backdrop-blur-[2px] animate-fb-fade-in" 
-        onClick={onClose} 
+      <div
+        className="absolute inset-0 bg-black/30 backdrop-blur-sm animate-fb-fade-in"
+        onClick={onClose}
       />
-      <div 
-        className="relative w-full max-w-md bg-white/95 backdrop-blur-[2px] rounded-xl shadow-2xl max-h-[80vh] flex flex-col animate-fb-scale-fade"
+      <div
+        className="relative w-full max-w-md glass rounded-2xl shadow-2xl max-h-[80vh] flex flex-col animate-fb-scale-fade border border-white/40"
       >
-        <div className="flex items-center justify-between p-4 border-b border-gray-200">
-          <h2 className="text-lg font-semibold text-gray-900">{title}</h2>
+        <div className="flex items-center justify-between p-4 border-b border-white/20">
+          <h2 className="text-lg font-bold text-gray-900">{title}</h2>
           <button
             onClick={onClose}
-            className="p-2 hover:bg-gray-100 rounded-full transition-colors duration-150 touch-manipulation"
+            className="p-2 hover:bg-white/40 rounded-full transition-colors duration-150 touch-manipulation"
           >
             <Icon name="close" className="w-5 h-5 text-gray-600" />
           </button>
@@ -118,18 +118,18 @@ const Modal = memo(({ isOpen, onClose, title, children }: {
 });
 Modal.displayName = 'Modal';
 
-const ListItem = memo(({ label, isSelected, onClick }: { 
-  label: string; 
-  isSelected: boolean; 
+const ListItem = memo(({ label, isSelected, onClick }: {
+  label: string;
+  isSelected: boolean;
   onClick: () => void;
 }) => (
   <button
     onClick={onClick}
     className={`w-full flex items-center justify-between px-4 py-3 transition-all duration-150 touch-manipulation ${
-      isSelected ? 'bg-blue-50' : 'hover:bg-gray-50'
+      isSelected ? 'bg-gradient-to-r from-blue-50 to-purple-50' : 'hover:bg-white/40'
     }`}
   >
-    <span className={`text-sm transition-all duration-150 ${isSelected ? 'font-semibold text-blue-600' : 'text-gray-900'}`}>
+    <span className={`text-sm transition-all duration-150 ${isSelected ? 'font-bold text-transparent bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text' : 'font-medium text-gray-900'}`}>
       {label}
     </span>
     {isSelected && (
@@ -180,19 +180,19 @@ const DomainList = memo(({ allDomains, selectedDomain, onSelect }: {
 
   return (
     <div className="flex flex-col h-full">
-      <div className="p-4 border-b border-gray-200 shrink-0">
+      <div className="p-4 border-b border-white/20 shrink-0">
         <div className="relative">
           <Icon name="search" className="w-5 h-5 text-gray-400 absolute left-3 top-1/2 -translate-y-1/2" />
-          <input 
-            type="text" 
-            value={searchQuery} 
-            onChange={(e) => setSearchQuery(e.target.value)} 
-            placeholder="搜索域名" 
-            className="w-full pl-10 pr-4 py-2 bg-gray-100 rounded-full text-sm outline-none focus:bg-gray-200 focus:ring-2 focus:ring-blue-500/20 transition-all duration-150" 
+          <input
+            type="text"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            placeholder="搜索域名"
+            className="w-full pl-10 pr-4 py-2.5 bg-white/40 rounded-xl text-sm outline-none focus:bg-white/60 focus:ring-2 focus:ring-blue-500/20 transition-all duration-150 font-medium"
           />
         </div>
       </div>
-      <div className="divide-y divide-gray-200 overflow-y-auto flex-1">
+      <div className="divide-y divide-white/20 overflow-y-auto flex-1">
         {!searchQuery && (
           <ListItem 
             label="随机域名" 
@@ -241,7 +241,6 @@ export default function FacebookStyleGenerator() {
   const [isInitialized, setIsInitialized] = useState(false);
   const [copiedField, setCopiedField] = useState<string | null>(null);
   const [isGenerating, setIsGenerating] = useState(false);
-  const [bgLoaded, setBgLoaded] = useState(false);
   
   const copyTimerRef = useRef<NodeJS.Timeout | null>(null);
 
@@ -298,23 +297,15 @@ export default function FacebookStyleGenerator() {
           if (detectedCountry) setSelectedCountry(detectedCountry);
         }
         setIsInitialized(true);
-      } catch (error) { 
-        if (isMounted) { 
-          setIpInfo({ ip: '检测失败', country: 'US' }); 
-          setIsInitialized(true); 
-        } 
+      } catch (error) {
+        if (isMounted) {
+          setIpInfo({ ip: '检测失败', country: 'US' });
+          setIsInitialized(true);
+        }
       }
     };
     initializeApp();
     return () => { isMounted = false; };
-  }, []);
-
-  // 预加载背景图片
-  useEffect(() => {
-    const img = new Image();
-    img.src = 'https://www.loliapi.com/acg/';
-    img.onload = () => setBgLoaded(true);
-    img.onerror = () => setBgLoaded(true); // 加载失败也显示，避免一直等待
   }, []);
 
   useEffect(() => {
@@ -352,30 +343,22 @@ export default function FacebookStyleGenerator() {
   }, [userInfo.email, userInfo.firstName, userInfo.lastName]);
 
   return (
-    <div className="min-h-screen bg-gray-50 relative">
-      {/* 背景图片 */}
-      <div 
-        className={`fixed inset-0 z-0 transition-opacity duration-700 ${
-          bgLoaded ? 'opacity-100' : 'opacity-0'
-        }`}
-        style={{
-          backgroundImage: 'url(https://www.loliapi.com/acg/)',
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-          backgroundRepeat: 'no-repeat',
-          backgroundAttachment: 'fixed'
-        }}
-      >
-        <div className="absolute inset-0 bg-white/50 backdrop-blur-[2px]" />
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 relative overflow-x-hidden">
+      {/* 动态渐变背景 */}
+      <div className="fixed inset-0 z-0">
+        <div className="absolute inset-0 bg-gradient-to-br from-blue-400/10 via-purple-400/10 to-pink-400/10" />
+        <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-gradient-to-br from-blue-400/20 to-transparent rounded-full blur-3xl animate-blob" />
+        <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-gradient-to-tr from-purple-400/20 to-transparent rounded-full blur-3xl animate-blob animation-delay-2000" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-gradient-to-bl from-pink-400/15 to-transparent rounded-full blur-3xl animate-blob animation-delay-4000" />
       </div>
 
       {/* Header */}
-      <header className="sticky top-0 z-40 bg-white/90 backdrop-blur-sm border-b border-gray-200 shadow-sm">
+      <header className="sticky top-0 z-40 glass border-b border-white/20 shadow-sm">
         <div className="flex items-center justify-between px-4 h-14">
-          <h1 className="text-xl font-bold text-blue-600">脸书小助手</h1>
-          <div className="flex items-center gap-1.5 px-2.5 py-1 bg-gray-100 rounded-full">
-            <div className="w-2 h-2 rounded-full bg-green-500 animate-fb-pulse" />
-            <span className="text-xs font-medium text-gray-600">{ipInfo.ip}</span>
+          <h1 className="text-xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">脸书小助手</h1>
+          <div className="flex items-center gap-1.5 px-3 py-1.5 bg-white/60 backdrop-blur-sm rounded-full shadow-sm border border-white/40">
+            <div className="w-2 h-2 rounded-full bg-green-500 animate-fb-pulse shadow-sm shadow-green-500/50" />
+            <span className="text-xs font-semibold text-gray-700">{ipInfo.ip}</span>
           </div>
         </div>
       </header>
@@ -389,7 +372,7 @@ export default function FacebookStyleGenerator() {
         ) : (
           <>
             {/* Info Card */}
-            <div className={`bg-white/90 backdrop-blur-[2px] rounded-lg shadow-lg transition-all duration-250 ${
+            <div className={`glass rounded-2xl shadow-xl shadow-blue-500/5 border border-white/40 transition-all duration-250 ${
               isGenerating ? 'opacity-50 scale-[0.98]' : 'opacity-100 scale-100'
             }`}>
               <InfoRow label="姓氏" value={userInfo.lastName} onCopy={() => copyToClipboard(userInfo.lastName, '姓氏')} isCopied={copiedField === '姓氏'} />
@@ -401,19 +384,19 @@ export default function FacebookStyleGenerator() {
               <div className="p-4 space-y-3">
                 <button
                   onClick={() => copyToClipboard(userInfo.email, '邮箱')}
-                  className="w-full flex items-center justify-between py-2 hover:bg-gray-50 rounded transition-colors duration-150 touch-manipulation"
+                  className="w-full flex items-center justify-between py-2 px-2 hover:bg-white/40 rounded-lg transition-colors duration-150 touch-manipulation"
                 >
                   <span className="text-sm font-semibold text-gray-500">邮箱</span>
                   <div className="flex items-center gap-2 min-w-0 flex-1 justify-end overflow-hidden">
                     <div className="relative w-full flex justify-end">
-                      <span 
+                      <span
                         className={`text-sm font-medium text-gray-900 truncate transition-all duration-150 ${
                           copiedField === '邮箱' ? 'opacity-0 scale-95' : 'opacity-100 scale-100'
                         }`}
                       >
                         {userInfo.email}
                       </span>
-                      <div 
+                      <div
                         className={`absolute right-0 flex items-center gap-1.5 transition-all duration-150 ${
                           copiedField === '邮箱' ? 'opacity-100 scale-100' : 'opacity-0 scale-95 pointer-events-none'
                         }`}
@@ -424,13 +407,13 @@ export default function FacebookStyleGenerator() {
                     </div>
                   </div>
                 </button>
-                
+
                 <button
                   onClick={handleInboxClick}
-                  className="w-full flex items-center justify-center gap-2 py-2.5 bg-gray-100 hover:bg-gray-200 rounded-lg transition-all duration-150 touch-manipulation"
+                  className="w-full flex items-center justify-center gap-2 py-2.5 bg-gradient-to-r from-blue-500/90 to-purple-500/90 hover:from-blue-600 hover:to-purple-600 rounded-xl transition-all duration-150 touch-manipulation shadow-lg shadow-blue-500/20"
                 >
-                  <Icon name="inbox" className="w-4 h-4 text-gray-700" />
-                  <span className="text-sm font-semibold text-gray-700">查看收件箱</span>
+                  <Icon name="inbox" className="w-4 h-4 text-white" />
+                  <span className="text-sm font-semibold text-white">查看收件箱</span>
                 </button>
               </div>
             </div>
@@ -439,7 +422,7 @@ export default function FacebookStyleGenerator() {
             <button
               onClick={generate}
               disabled={isGenerating}
-              className={`w-full py-3 bg-blue-600/90 backdrop-blur-[2px] hover:bg-blue-700 rounded-lg shadow-lg transition-all duration-150 flex items-center justify-center gap-2 touch-manipulation ${
+              className={`w-full py-3.5 bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-700 hover:to-blue-600 rounded-2xl shadow-xl shadow-blue-500/30 transition-all duration-150 flex items-center justify-center gap-2 touch-manipulation active:scale-[0.98] ${
                 isGenerating ? 'opacity-70 cursor-not-allowed' : ''
               }`}
             >
@@ -452,31 +435,35 @@ export default function FacebookStyleGenerator() {
             </button>
 
             {/* Settings */}
-            <div className="bg-white/90 backdrop-blur-[2px] rounded-lg shadow-lg divide-y divide-gray-200">
+            <div className="glass rounded-2xl shadow-xl shadow-purple-500/5 border border-white/40 divide-y divide-white/20">
               <button
                 onClick={() => setShowCountryModal(true)}
-                className="w-full flex items-center justify-between p-4 hover:bg-gray-50 transition-all duration-150 touch-manipulation"
+                className="w-full flex items-center justify-between p-4 hover:bg-white/40 transition-all duration-150 touch-manipulation first:rounded-t-2xl"
               >
                 <div className="flex items-center gap-3">
-                  <Icon name="globe" className="w-5 h-5 text-gray-600" />
-                  <span className="text-sm font-medium text-gray-900">地区</span>
+                  <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-blue-500/10 to-purple-500/10 flex items-center justify-center">
+                    <Icon name="globe" className="w-5 h-5 text-blue-600" />
+                  </div>
+                  <span className="text-sm font-semibold text-gray-900">地区</span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <span className="text-sm text-gray-600">{selectedCountry.name}</span>
+                  <span className="text-sm font-medium text-gray-600">{selectedCountry.name}</span>
                   <Icon name="chevronRight" className="w-5 h-5 text-gray-400" />
                 </div>
               </button>
-              
+
               <button
                 onClick={() => setShowDomainModal(true)}
-                className="w-full flex items-center justify-between p-4 hover:bg-gray-50 transition-all duration-150 touch-manipulation"
+                className="w-full flex items-center justify-between p-4 hover:bg-white/40 transition-all duration-150 touch-manipulation last:rounded-b-2xl"
               >
                 <div className="flex items-center gap-3">
-                  <Icon name="inbox" className="w-5 h-5 text-gray-600" />
-                  <span className="text-sm font-medium text-gray-900">邮箱域名</span>
+                  <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-purple-500/10 to-pink-500/10 flex items-center justify-center">
+                    <Icon name="inbox" className="w-5 h-5 text-purple-600" />
+                  </div>
+                  <span className="text-sm font-semibold text-gray-900">邮箱域名</span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <span className="text-sm text-gray-600">{displayDomain}</span>
+                  <span className="text-sm font-medium text-gray-600">{displayDomain}</span>
                   <Icon name="chevronRight" className="w-5 h-5 text-gray-400" />
                 </div>
               </button>
